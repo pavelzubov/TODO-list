@@ -125,21 +125,19 @@ let newNodeParent,
         }
 
         this.downloadTest = (parse = this.parsingFromJSON, convert = this.convertToNodes) => {
-            let nodeDraw = new MainPoint('Node_Draw', 'root', 'Самый основной элемент'),
-                nodeDraw1 = new MainPoint('Node_Draw_1', 'Node_Draw', 'Основные элементы 1'),
-                nodeDraw2 = new MainPoint('Node_Draw_2', 'Node_Draw', 'Основные элементы 2'),
-                nodeDraw1_2 = new MainPoint('Node_Draw_1_2', 'Node_Draw_1', 'Подзадача к 1'),
-                nodeDrawLeaf1 = new SubPoint('Node_Draw_leaf1', 'Node_Draw_1_2', 'Лист 1'),
-                nodeDrawLeaf2 = new SubPoint('Node_Draw_leaf2', 'Node_Draw_1_2', 'Лист 2'),
-                nodeDrawLeaf3 = new SubPoint('Node_Draw_leaf3', 'Node_Draw_1_2', 'Лист 3'),
-                nodeDraw3 = new MainPoint('Node_Draw_3', 'Node_Draw', 'Основные элементы 3'),
-                nodeDraw4 = new MainPoint('Node_Draw_4', 'Node_Draw', 'Основные элементы 4'),
-                nodeDraw4_1 = new MainPoint('Node_Draw_4_1', 'Node_Draw_4', 'Подзадача к 4'),
-                nodeDraw4_2 = new MainPoint('Node_Draw_4_2', 'Node_Draw_4', 'Подзадача к 4'),
-                nodeDraw5_1 = new MainPoint('Node_Draw_5_1', 'Node_Draw_4_1', 'Подзадача к 4_1'),
-                nodeDraw5_2 = new MainPoint('Node_Draw_5_2', 'Node_Draw_4_1', 'Подзадача к 4_1'),
-                nodeDraw6_1 = new MainPoint('Node_Draw_6_1', 'Node_Draw_5_1', 'Подзадача к 5_1'),
-                nodeDraw6_2 = new MainPoint('Node_Draw_6_2', 'Node_Draw_5_1', 'Подзадача к 5_1');
+            let nodeDraw = new MainPoint('Node_Draw', 'root', 'Разработать TODO-лист'),
+                nodeDraw2 = new MainPoint('Node_Draw_2', 'Node_Draw', 'Создать надёжную расширяемую модель'),
+                nodeDraw1 = new MainPoint('Node_Draw_1', 'Node_Draw', 'Создать интерфейс (отображение)'),
+                nodeDraw1_2 = new MainPoint('Node_Draw_1_2', 'Node_Draw_1', 'Реализовать блоковое построение списка'),
+                nodeDrawLeaf1 = new SubPoint('Node_Draw_leaf1', 'Node_Draw_1_2', 'Сделать создание листовых задач'),
+                nodeDrawLeaf2 = new SubPoint('Node_Draw_leaf2', 'Node_Draw_1_2', 'Сделать создание узловых задач'),
+                nodeDraw3 = new MainPoint('Node_Draw_3', 'Node_Draw', 'Покрыть тестами'),
+                nodeDraw4 = new MainPoint('Node_Draw_4', 'Node_Draw', 'Создать интерфейс (редактирование)'),
+                nodeDraw4_1 = new SubPoint('Node_Draw_4_1', 'Node_Draw_4', 'Реализовать удаление'),
+                nodeDraw4_2 = new MainPoint('Node_Draw_4_2', 'Node_Draw_4', 'Реализовать редактирование'),
+                nodeDraw5_1 = new MainPoint('Node_Draw_5_1', 'Node_Draw_4_2', 'Реализовать создание'),
+                nodeDraw5_2 = new MainPoint('Node_Draw_5_2', 'Node_Draw_4_2', 'Реализовать изменение описания'),
+                nodeDraw6_1 = new MainPoint('Node_Draw_6_1', 'Node_Draw_4_2', 'Реализовать изменение структуры');
             drawing.drawList();
 
         }
