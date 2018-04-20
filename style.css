@@ -1,0 +1,149 @@
+@import url(http://fonts.googleapis.com/css?family=Exo+2:400,200,100,300,500,600,700&subset=latin,cyrillic);
+@import url(https://fonts.googleapis.com/css?family=Roboto:100,400,300,500,700,900&subset=latin,cyrillic-ext,cyrillic);
+@import url('https://fonts.googleapis.com/css?family=Lobster:100,400,300,500,700,900&subset=latin,cyrillic-ext,cyrillic');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700,800');
+ body,
+html {
+    padding: 0px;
+    margin: 0px;
+    font-weight: 300 !important;
+    font-family: 'Open Sans' !important;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+}
+div {
+    padding: 5px 0px 5px 5px;
+}
+.outer {
+    border-radius: 1px;
+    border-color: rgba(64, 23, 78, 0.05);
+    border-style: solid;
+    border-width: 0px 0px 0px 2px;
+    margin: 0 0px 0 30px;
+}
+.inner {
+    margin: 0 0px 0 0px;
+    display: flex;
+    align-items: center;
+}
+.SubPoint {
+    margin: 0 0 0 0px;
+    font-style: italic;
+}
+.SubPoint > .inner {
+    margin: 0 0 0 30px;
+    font-style: italic;
+}
+.SubPoint .description {
+    opacity: 0.7;
+}
+.descriptionInput {
+    display: none;
+    width: auto;
+    margin: 0 0 0 0;
+    font-weight: 300 !important;
+    font-family: 'Open Sans' !important;
+    border-radius: .25rem;
+    padding: 7px;
+    border: 1px solid rgba(20, 20, 20, 0);
+}
+.descriptionInput:hover {
+    border-color: #ced4da;
+}
+.descriptionText {
+    display: inline-block;
+    border-radius: .25rem;
+    padding: 8px;
+    border: 1px solid rgba(20, 20, 20, 0);
+}
+.descriptionText:hover {
+    border-color: #ced4da;
+}
+.descriptionInput,.descriptionText{
+	
+}
+.description {
+    margin: 0 0 0 0px;
+    padding: 3px;
+    border: 0px solid black;
+}
+label {
+    cursor: pointer;
+    padding: 5px;
+    display: block;
+    float: left;
+    z-index: 100;
+}
+.custom-control-input::before,
+.custom-control-input::after {
+    margin: 0px;
+}
+::before,
+::after {
+    margin:5px;
+}
+.remove,
+.plus {
+    cursor: pointer;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 0.5rem;
+    padding: 10px 20px 10px 20px;
+    opacity: 0.5;
+}
+.remove {
+    color: mediumvioletred;
+}
+.plus {
+    color: forestgreen;
+    background-color: transparent;
+    border: 0;
+}
+.remove:hover,
+.plus:hover {
+    opacity: 1;
+}
+inpit {} .textCheckboxBlock {
+    border-width: 0px;
+}
+.unre {
+    width: 100%;
+}
+.unre div {
+    float: left;
+    padding: 25px;
+    font-size: 25px;
+}
+.undo,
+.redo {
+    transition: 0.2s;
+    color: forestgreen;
+}
+.undo {} .redo {} .active {
+    cursor: pointer;
+    opacity: 1;
+}
+.mute {
+    cursor: auto;
+    opacity: 0.2;
+}
+#plane {
+    width: 100%;
+    float: left;
+}
+.done {
+    text-decoration: line-through;
+}
+.move {
+    float: left;
+    font-size: 1.3rem;
+    font-style: normal !important;
+    padding: 10px 10px 10px 10px;
+    opacity: 0.3;
+    cursor: move;
+}
+.root {
+    margin: 0;
+}
