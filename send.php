@@ -1,13 +1,16 @@
 <?php
 	$dbServer="localhost";
-	$dbUser="u0080754_topaz_1";
-	$dbPassword="dkcV55lK";
-	$dbDatabase="u0080754_topaz_3";
+	$dbUser="";
+	$dbPassword="";
+	$dbDatabase="";
 	$db=@mysql_connect($dbServer,$dbUser,$dbPassword);
-	mysql_query("set character_set_client='cp1251'");
-	mysql_query("set character_set_results='cp1251'");
-	mysql_query("set collation_connection='cp1251_general_ci'");
+	mysql_query("SET character_set_client='UTF-8'");
+	mysql_query("SET character_set_results='UTF-8'");
+	mysql_query("SET character_set_connection='UTF-8'");
+	mysql_query("SET collation_connection='UTF-8'");
 
+	$data=file_get_contents("php://input");
+	if(!$data)exit();
 	if(!$db){
 		echo mysql_error();
 		exit();
@@ -17,9 +20,9 @@
 		echo mysql_error();
 		exit();
 	}
-	$sql = "UPDATE tm SET data='".iconv('UTF-8','cp1251',$_POST['submit'])."'";
+	$sql = "UPDATE tm SET data='".$data."'";
 	if(!mysql_query($sql))
 	{echo mysql_error();} 
 	else 
-	{echo '<center>Успешно</center>';}
+	{echo '<center>Тспешно</center>';}
 ?>
