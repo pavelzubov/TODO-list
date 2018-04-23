@@ -1,16 +1,10 @@
 describe('Plans', function() {
     describe('View', function() {
-        describe('Page', function() {
-            it('Page load', function() {
-                expect(loading()).toBe('loading suceessful');
-            })
-
-        });
         describe('Put in', function() {
             it('Should validate arguments', function() {
                 let newPutIn = document.createElement('div');
-                expect(putIn('', document.getElementById('plane'))).toBe(null);
-                expect(putIn(newPutIn)).toBe(null);
+                expect(drawing.putIn('', document.getElementById('plane'))).toBe(null);
+                expect(drawing.putIn(newPutIn)).toBe(null);
             });
         });
         describe('Create item', function() {
@@ -28,7 +22,7 @@ describe('Plans', function() {
                 newDiv.style.width = style.width;
                 newDiv.style.height = style.height;
 
-                expect(createElement('div', data.name, {
+                expect(drawing.createElement('div', data.name, {
                     className: data.name,
                     style: style
                 })).toEqual(newDiv);
@@ -37,9 +31,9 @@ describe('Plans', function() {
                 let newDiv = document.createElement('div');
                 newDiv.id = 'newDiv';
                 document.getElementById('plane').appendChild(newDiv);
-                expect(createElement('', 'newDiv2')).toBe(null);
-                expect(createElement('div', '')).toBe(null);
-                expect(createElement('div', 'newDiv')).toBe(null);
+                expect(drawing.createElement('', 'newDiv2')).toBe(null);
+                expect(drawing.createElement('div', '')).toBe(null);
+                expect(drawing.createElement('div', 'newDiv')).toBe(null);
             });
 
         });
@@ -104,32 +98,40 @@ describe('Plans', function() {
         });
     });
     describe('Model', function() {
-        describe('Saving', function() {
+        /*describe('Saving', function() {
             let nodeSaving = new MainPoint('Node Saving', 'root'),
                 nodeSaving1 = new MainPoint('Node Saving 1', 'Node Saving');
             it('Parse to JSON', function() {
-                expect(parsingToJSON()).toBe(JSON.stringify(tree));
+                expect(base.parsingToJSON()).toBe(JSON.stringify(tree));
             });
             it('Upload to test server', function() {
-                expect(save()).toBe(server);
+                expect(base.save()).toBe(server);
             });
         });
         describe('Opening', function() {
             let nodeOpening = new MainPoint('Node Opening', 'root'),
                 nodeOpening1 = new MainPoint('Node Opening 1', 'Node Opening'),
-                testTree = Object.assign({}, tree),
-                testServer = save(testTree),
-                test = convertToNodes(parsingFromJSON(testServer));
+                testTree = Object.assign({}, base.tree),
+                testServer = base.save(testTree),
+                test = base.convertToNodes(base.parsingFromJSON(testServer));
             it('Parse from JSON', function() {
-                expect(parsingFromJSON(testServer)).toEqual(JSON.parse(testServer));
+                expect(base.parsingFromJSON(testServer)).toEqual(JSON.parse(testServer));
             });
             it('Converting to nodes', function() {
                 let nodeOpening2 = new MainPoint('Node Opening2', 'root'),
                     nodeOpening21 = new MainPoint('Node Opening2 1', 'Node Opening2'),
-                    testTree2 = Object.assign({}, tree),
-                    testServer2 = save(testTree),
-                    test2 = convertToNodes(parsingFromJSON(testServer2));
+                    testTree2 = Object.assign({}, base.tree),
+                    testServer2 = base.save(testTree2),
+                    test2 = base.convertToNodes(base.parsingFromJSON(testServer2));
                 expect(test2).toEqual(testTree2);
+            });
+        });*/
+
+        describe('Singleton', function() {
+            let base1 = new Base(),
+                base2 = new Base();
+            it('make one object', function() {
+                expect(base2).toBe(base1);
             });
         });
         describe('Deleting', function() {
@@ -145,9 +147,9 @@ describe('Plans', function() {
                     nodeDeleting_21_2 = new MainPoint('Node deleting_2 1_2', 'Node deleting_2 1'),
                     nodeDeleting_22_1 = new MainPoint('Node deleting_2 2_1', 'Node deleting_2 1_1');
                 nodeDeleting_21.remove();
-                expect(findNode(nodeDeleting_21_2)).toBe(undefined);
-                expect(findNode(nodeDeleting_21_2)).toBe(undefined);
-                expect(findNode(nodeDeleting_22_1)).toBe(undefined);
+                expect(base.findNode(nodeDeleting_21_2)).toBe(undefined);
+                expect(base.findNode(nodeDeleting_21_2)).toBe(undefined);
+                expect(base.findNode(nodeDeleting_22_1)).toBe(undefined);
             })
 
         });
@@ -156,7 +158,7 @@ describe('Plans', function() {
                 nodeMoving1 = new MainPoint('Node Moving 1', 'Node Moving'),
                 nodeMoving2 = new MainPoint('Node Moving 2', 'Node Moving'),
                 nodeMoving1_2 = new MainPoint('Node Moving 1_2', 'Node Moving 1');
-            move('Node Moving 1_2', 'Node Moving 2');
+            base.move('Node Moving 1_2', 'Node Moving 2');
             nodeMoving2Childs = nodeMoving2.childrens();
             nodeMoving1Childs = nodeMoving1.childrens();
             it('Move to another branch', function() {
@@ -164,11 +166,11 @@ describe('Plans', function() {
                 expect(nodeMoving1Childs).toBe(null);
             })
             it('Invalid property', function() {
-                expect(move('Node Moving 1_2 foo', 'Node Moving 1')).toBe(null);
-                expect(move('Node Moving 1_2', 'Node Moving 1 foo')).toBe(null);
+                expect(base.move('Node Moving 1_2 foo', 'Node Moving 1')).toBe(null);
+                expect(base.move('Node Moving 1_2', 'Node Moving 1 foo')).toBe(null);
             })
             it('Valid property', function() {
-                expect(move('Node Moving 1_2', 'Node Moving 1')).toBe(nodeMoving1_2);
+                expect(base.move('Node Moving 1_2', 'Node Moving 1')).toBe(nodeMoving1_2);
             })
             let nodeMoving3 = new MainPoint('Node Moving 3', 'Node Moving'),
                 nodeMoving4 = new MainPoint('Node Moving 4', 'Node Moving'),
@@ -178,10 +180,10 @@ describe('Plans', function() {
                 nodeMoving5_2 = new MainPoint('Node Moving 5_2', 'Node Moving 4_1'),
                 nodeMoving6_1 = new MainPoint('Node Moving 6_1', 'Node Moving 5_1'),
                 nodeMoving6_2 = new MainPoint('Node Moving 6_2', 'Node Moving 5_1');
-            move('Node Moving 5_1', 'Node Moving 3');
+            base.move('Node Moving 5_1', 'Node Moving 3');
 
             it('Deep move', function() {
-                expect(findNode(getProperty(findNode(getProperty('Node Moving 6_2', 'parent')).name, 'parent'))).toBe(findNode('Node Moving 3'));
+                expect(base.findNode(base.getProperty(base.findNode(base.getProperty('Node Moving 6_2', 'parent')).name, 'parent'))).toBe(base.findNode('Node Moving 3'));
             })
         });
         describe('Get property', function() {
@@ -189,19 +191,19 @@ describe('Plans', function() {
                 nodeGet1 = new MainPoint('Node Get 1', 'Node Get'),
                 nodeGet2 = new MainPoint('Node Get 2', 'Node Get');
             it('Get description', function() {
-                setProperty('Node Get 2', 'description', 'This is Getd property');
-                expect(getProperty('Node Get 2', 'description')).toBe('This is Getd property');
+                base.setProperty('Node Get 2', 'description', 'This is Getd property');
+                expect(base.getProperty('Node Get 2', 'description')).toBe('This is Getd property');
             });
             it('Get name', function() {
-                expect(getProperty('Node Get 1', 'name')).toBe(nodeGet1.name);
-                expect(getProperty('Node Get 1', 'name')).toBe('Node Get 1');
+                expect(base.getProperty('Node Get 1', 'name')).toBe(nodeGet1.name);
+                expect(base.getProperty('Node Get 1', 'name')).toBe('Node Get 1');
             });
             it('Invalid name', function() {
-                expect(getProperty('Node Get 1 foo', 'description')).toBe(null);
+                expect(base.getProperty('Node Get 1 foo', 'description')).toBe(null);
             });
             it('Invalid property', function() {
-                expect(getProperty('Node Get 1', 'price')).toBe(null);
-                expect(getProperty('Node Get', 'Node Get 1')).toBe(null);
+                expect(base.getProperty('Node Get 1', 'price')).toBe(null);
+                expect(base.getProperty('Node Get', 'Node Get 1')).toBe(null);
             });
 
         });
@@ -210,24 +212,24 @@ describe('Plans', function() {
                 nodeChange1 = new MainPoint('Node Change 1', 'Node Change'),
                 nodeChange2 = new MainPoint('Node Change 2', 'Node Change');
             it('Change description', function() {
-                setProperty('Node Change 2', 'description', 'This is changed property');
+                base.setProperty('Node Change 2', 'description', 'This is changed property');
                 expect(nodeChange2.description).toBe('This is changed property');
             });
             it('Change name', function() {
-                setProperty('Node Change 1', 'name', 'Node Change 1 new');
+                base.setProperty('Node Change 1', 'name', 'Node Change 1 new');
                 expect(nodeChange1.name).toBe('Node Change 1 new');
-                expect(findNode('Node Change 1 new')).toBe(nodeChange1);
+                expect(base.findNode('Node Change 1 new')).toBe(nodeChange1);
             });
             it('Invalid name', function() {
-                expect(setProperty('Node Change 1 foo', 'description', 'This is changed property')).toBe(null);
+                expect(base.setProperty('Node Change 1 foo', 'description', 'This is changed property')).toBe(null);
             });
             it('Invalid property', function() {
-                expect(setProperty('Node Change 1', 'price', 'This is changed property')).toBe(null);
-                expect(setProperty('Node Change', 'Node Change 1', 'This is changed property')).toBe(null);
+                expect(base.setProperty('Node Change 1', 'price', 'This is changed property')).toBe(null);
+                expect(base.setProperty('Node Change', 'Node Change 1', 'This is changed property')).toBe(null);
             });
             it('Invalid value', function() {
-                expect(setProperty('Node Change 1', 'description', '')).toBe(null);
-                expect(setProperty('Node Change 1', 'name', 'Node Change')).toBe(null);
+                expect(base.setProperty('Node Change 1', 'description', '')).toBe(null);
+                expect(base.setProperty('Node Change 1', 'name', 'Node Change')).toBe(null);
             });
 
         });
@@ -236,12 +238,12 @@ describe('Plans', function() {
                 nodeParent1 = new MainPoint('Node parent 1', 'Node parent'),
                 nodeSubParent2 = new SubPoint('Node sub parent', 'Node parent 1');
             it('Change to main', function() {
-                changeRole('Node sub parent', 'MainPoint');
+                base.changeRole('Node sub parent', 'MainPoint');
                 // nodeSubParent2.__proto__ = MainPoint.prototype;
                 expect(nodeSubParent2.open).toBe(true);
             })
             it('Change to sub', function() {
-                changeRole('Node sub parent', 'SubPoint');
+                base.changeRole('Node sub parent', 'SubPoint');
                 // nodeSubParent2.__proto__ = SubPoint.prototype;
                 expect(nodeSubParent2.open).toBe(undefined);
             })
@@ -260,11 +262,11 @@ describe('Plans', function() {
             })
             it('Empty parent', function() {
                 let nodeEmptyParent = new MainPoint('nodeEmptyParent', '');
-                expect(findNode('nodeEmptyParent')).toBe(undefined);
+                expect(base.findNode('nodeEmptyParent')).toBe(undefined);
             })
             it('Parent dont exist', function() {
                 let nodeWithoutParent = new MainPoint('nodeWithoutParent', 'foo');
-                expect(findNode('nodeWithoutParent')).toBe(undefined);
+                expect(base.findNode('nodeWithoutParent')).toBe(undefined);
             })
         });
         describe('Childrens', function() {
@@ -290,7 +292,7 @@ describe('Plans', function() {
             let parent = 'root',
                 name = 'test',
                 newPoint = new MainPoint(name, parent),
-                parenteNode = findNode(parent);
+                parenteNode = base.findNode(parent);
             it('Main point created', function() {
                 expect(newPoint.done).toBe(false);
                 expect(newPoint.name).toBe(name);
@@ -301,7 +303,7 @@ describe('Plans', function() {
             let parentSub = 'root',
                 nameSub = 'test sub',
                 newSubPoint = new SubPoint(nameSub, parentSub),
-                parentSubNode = findNode(parentSub);
+                parentSubNode = base.findNode(parentSub);
             it('Sub point created', function() {
                 expect(newSubPoint.done).toBe(false);
                 expect(newSubPoint.name).toBe(nameSub);
@@ -323,7 +325,7 @@ describe('Plans', function() {
                     }
                 };
             it('Node finded', function() {
-                expect(findNode('root', newTree)).toBe(node6);
+                expect(base.findNode('root', newTree)).toBe(node6);
             })
 
             let node1 = new MainPoint('node 1', 'root'),
@@ -336,8 +338,8 @@ describe('Plans', function() {
                 leaf1 = new SubPoint('leaf 1', 'node 1_3'),
                 leaf2 = new SubPoint('leaf 2', 'node 2_2');
             it('BuildTree', function() {
-                expect(findNode('leaf 1')).toBe(leaf1);
-                expect(findNode('leaf 2')).toBe(leaf2);
+                expect(base.findNode('leaf 1')).toBe(leaf1);
+                expect(base.findNode('leaf 2')).toBe(leaf2);
             })
         })
         describe('Overview done', function() {

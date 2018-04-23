@@ -13,6 +13,7 @@ let newNodeParent,
     Base = function() {
         // объект базы
         // 
+        let instanse = this;
 
         this.tree = {
             root: {
@@ -129,7 +130,7 @@ let newNodeParent,
                 toNode = base.findNode(to);
             if (!node || !toNode || parentNode === toNode) return null;
             node.parent = to;
-            if (toNode instanceof SubPoint) changeRole(to, 'MainPoint');
+            if (toNode instanceof SubPoint) this.changeRole(to, 'MainPoint');
             toNode[point] = node;
             delete parentNode[point];
             return node;
@@ -220,6 +221,21 @@ let newNodeParent,
             }
             return mainPoint;
         }
+
+        this.changeRole = (name, newType) => {
+            let node = this.findNode(name);
+            if (!node || (newType !== 'MainPoint' && newType !== 'SubPoint') || node.type === newType) {
+                console.error('Invalid arguments');
+                return null;
+            }
+            node.type = newType;
+            if (newType === 'MainPoint') node.__proto__ = MainPoint.prototype;
+            else node.__proto__ = SubPoint.prototype;
+            return node;
+        }
+        Base = function() {
+            return instanse;
+        };
     },
     base = new Base();
 
@@ -287,7 +303,7 @@ function SubPoint(name, parent, description = '') {
         return;
     }
     if (base.findNode(parent) instanceof SubPoint) {
-        changeRole(parent, 'MainPoint')
+        base.changeRole(parent, 'MainPoint')
     }
     this.name = name;
     this.description = description;
@@ -300,17 +316,6 @@ function SubPoint(name, parent, description = '') {
 SubPoint.prototype = new Point();
 SubPoint.prototype.constructor = SubPoint;
 
-function changeRole(name, newType) {
-    let node = base.findNode(name);
-    if (!node || (newType !== 'MainPoint' && newType !== 'SubPoint') || node.type === newType) {
-        console.error('Invalid arguments');
-        return null;
-    }
-    node.type = newType;
-    if (newType === 'MainPoint') node.__proto__ = MainPoint.prototype;
-    else node.__proto__ = SubPoint.prototype;
-    return node;
-}
 
 
 
