@@ -1,12 +1,13 @@
 <?php
 	$dbServer="localhost";
-	$dbUser="u0080754_topaz_1";
-	$dbPassword="dkcV55lK";
-	$dbDatabase="u0080754_topaz_3";
+	$dbUser="";
+	$dbPassword="";
+	$dbDatabase="";
 	$db=@mysql_connect($dbServer,$dbUser,$dbPassword);
-	mysql_query("set character_set_client='cp1251'");
-	mysql_query("set character_set_results='cp1251'");
-	mysql_query("set collation_connection='cp1251_general_ci'");
+	mysql_query("SET character_set_client='UTF-8_general_ci'");
+	mysql_query("SET character_set_results='UTF-8_general_ci'");
+	mysql_query("SET character_set_connection='UTF-8_general_ci'");
+	mysql_query("SET collation_connection='UTF-8_general_ci'");
 
 	if(!$db){
 		echo mysql_error();

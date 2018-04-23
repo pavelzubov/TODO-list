@@ -8,7 +8,7 @@ let newNodeParent,
     plane = document.getElementById('plane'),
     dragObject = {},
     styleLine = {
-        
+
     },
     Base = function() {
         // объект базы
@@ -24,7 +24,7 @@ let newNodeParent,
         this.undoArr = [];
         this.redoArr = [];
         // отправка данных на сервер.
-        this.send = (data) => {
+        this.sendAjax = (data) => {
             $.post(
                 'send.php', {
                     submit: data
@@ -34,9 +34,26 @@ let newNodeParent,
                 }
             )
         };
+        this.sendFetch = (data) => {
+            fetch('send.php', {
+                method: "POST",
+                body: data,
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                credentials: "same-origin",
+                mode: 'cors'
+            })
+                .then(res => {
+                    res.text().then(text => {
+                        console.log('Save successful', text);
+                    })
+
+                });
+        };
 
         // получение данных с сервера.
-        this.update = (parse, convert) => {
+        this.updateAjax = (parse, convert) => {
             let that = this;
             $.post(
                 'update.php', '',
@@ -46,6 +63,24 @@ let newNodeParent,
                 }
             )
         };
+        // получение данных с сервера.
+        this.updateFetch = (parse, convert) => {
+            let that = this;
+            fetch('update.php', {
+                mode: 'cors',
+                headers: {
+                    'content-type': 'application/json;charset=UTF-8'
+                }
+            })
+                .then(res => {
+                    res.json().then(data => {
+                        that.tree = convert(data);
+                        drawing.drawList();
+                    });
+                })
+
+        };
+
         this.undo = () => {
             this.redoArr.push(this.parsingToJSON());
             this.tree = this.convertToNodes(this.parsingFromJSON(this.undoArr.splice(this.undoArr.length - 1, 1)[0]));
@@ -120,8 +155,8 @@ let newNodeParent,
             return data;
         }
 
-        this.downloadAJAX = (parse = this.parsingFromJSON, convert = this.convertToNodes) => {
-            return this.update(parse, convert);
+        this.downloadServer = (parse = this.parsingFromJSON, convert = this.convertToNodes, update = this.updateFetch) => {
+            return update(parse, convert);
         }
 
         this.downloadTest = (parse = this.parsingFromJSON, convert = this.convertToNodes) => {
@@ -146,8 +181,8 @@ let newNodeParent,
             return JSON.parse(data);
         }
 
-        this.uploadAJAX = (data) => {
-            base.send(data);
+        this.uploadServer = (data, send = base.sendFetch) => {
+            send(data);
             return data;
         }
 
@@ -438,8 +473,7 @@ plane.onclick = function(event) {
         base.undoArr.push(base.parsingToJSON());
         newNodeParent = node.name;
         $('#newModal').modal('show');
-    }
-    else if (~event.target.className.indexOf('descriptionText')) {
+    } else if (~event.target.className.indexOf('descriptionText')) {
         let input = document.getElementById('descriptionInput-of-' + event.target.id.split('-of-')[1]);
         input.style.display = 'inline';
         input.style.width = event.target.offsetWidth + 'px';
